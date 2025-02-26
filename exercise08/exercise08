@@ -1,0 +1,66 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class Estudante {
+    private String nome;
+    private String email;
+    private int quarto;
+
+    public Estudante(String nome, String email, int quarto) {
+        this.nome = nome;
+        this.email = email;
+        this.quarto = quarto;
+    }
+
+    public int getQuarto() {
+        return quarto;
+    }
+
+    @Override
+    public String toString() {
+        return quarto + ": " + nome + ", " + email;
+    }
+}
+
+public class Pensionato {
+    private ArrayList<Estudante> quartos = new ArrayList<>();
+
+    public void registrarAluguel(String nome, String email, int quarto) {
+        quartos.add(new Estudante(nome, email, quarto));
+    }
+
+    public void exibirRelatorio() {
+        Collections.sort(quartos, Comparator.comparingInt(Estudante::getQuarto));
+        System.out.println("\nQuartos ocupados:");
+        for (Estudante estudante : quartos) {
+            System.out.println(estudante);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Pensionato pensionato = new Pensionato();
+
+        System.out.print("Quantos quartos serão alugados? ");
+        int n = scanner.nextInt();
+        scanner.nextLine();
+
+        for (int i = 1; i <= n; i++) {
+            System.out.println("Aluguel #" + i + ":");
+            System.out.print("Nome: ");
+            String nome = scanner.nextLine();
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
+            System.out.print("Quarto (0-9): ");
+            int quarto = scanner.nextInt();
+            scanner.nextLine();
+
+            pensionato.registrarAluguel(nome, email, quarto);
+        }
+        
+        pensionato.exibirRelatorio();
+        scanner.close();
+    }
+}
