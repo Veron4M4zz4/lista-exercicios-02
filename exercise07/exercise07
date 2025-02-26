@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class Pensionato {
+    private Estudante[] quartos = new Estudante[10];
+
+    public void registrarAluguel(String nome, String email, int quarto) {
+        quartos[quarto] = new Estudante(nome, email, quarto);
+    }
+
+    public void exibirRelatorio() {
+        System.out.println("\nQuartos ocupados:");
+        for (Estudante estudante : quartos) {
+            if (estudante != null) {
+                System.out.println(estudante);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Pensionato pensionato = new Pensionato();
+
+        System.out.print("Quantos quartos serão alugados? ");
+        int n = scanner.nextInt();
+        scanner.nextLine();
+
+        for (int i = 1; i <= n; i++) {
+            System.out.println("Aluguel #" + i + ":");
+            System.out.print("Nome: ");
+            String nome = scanner.nextLine();
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
+            System.out.print("Quarto (0-9): ");
+            int quarto = scanner.nextInt();
+            scanner.nextLine();
+
+            pensionato.registrarAluguel(nome, email, quarto);
+        }
+
+        pensionato.exibirRelatorio();
+        scanner.close();
+    }
+}
