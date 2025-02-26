@@ -1,0 +1,87 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Funcionario {
+    private int id;
+    private String nome;
+    private double salario;
+
+    public Funcionario(int id, String nome, double salario) {
+        this.id = id;
+        this.nome = nome;
+        this.salario = salario;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void aumentarSalario(double percentual) {
+        this.salario += this.salario * (percentual / 100);
+    }
+
+    @Override
+    public String toString() {
+        return id + ", " + nome + ", " + String.format("%.2f", salario);
+    }
+}
+
+public class Empresa {
+    private ArrayList<Funcionario> funcionarios = new ArrayList<>();
+
+    public void adicionarFuncionario(int id, String nome, double salario) {
+        funcionarios.add(new Funcionario(id, nome, salario));
+    }
+
+    public Funcionario buscarFuncionarioPorId(int id) {
+        for (Funcionario f : funcionarios) {
+            if (f.getId() == id) {
+                return f;
+            }
+        }
+        return null;
+    }
+
+    public void listarFuncionarios() {
+        System.out.println("Lista de Empregados:");
+        for (Funcionario f : funcionarios) {
+            System.out.println(f);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Empresa empresa = new Empresa();
+
+        System.out.print("Quantos empregados serão cadastrados? ");
+        int n = scanner.nextInt();
+
+        for (int i = 1; i <= n; i++) {
+            System.out.println("Empregado #" + i + ":");
+            System.out.print("Id: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+            System.out.print("Nome: ");
+            String nome = scanner.nextLine();
+            System.out.print("Salário: ");
+            double salario = scanner.nextDouble();
+            
+            empresa.adicionarFuncionario(id, nome, salario);
+        }
+
+        System.out.print("Informe o Id do funcionário que terá seu salário modificado: ");
+        int idAumento = scanner.nextInt();
+        Funcionario funcionario = empresa.buscarFuncionarioPorId(idAumento);
+        
+        if (funcionario == null) {
+            System.out.println("ID não encontrado.");
+        } else {
+            System.out.print("Informe o percentual: ");
+            double percentual = scanner.nextDouble();
+            funcionario.aumentarSalario(percentual);
+        }
+        
+        empresa.listarFuncionarios();
+        scanner.close();
+    }
+}
