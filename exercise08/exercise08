@@ -17,8 +17,7 @@ class Estudante {
     public int getQuarto() {
         return quarto;
     }
-
-    @Override
+    
     public String toString() {
         return quarto + ": " + nome + ", " + email;
     }
